@@ -5,6 +5,7 @@ const cors= require('cors');
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 
 const port= process.env.PORT || 5000;
@@ -21,9 +22,7 @@ const users= [
     {id:3, name: "sakib", email: 'sakib@gmail.com', phoneNumber:'01775675786'},
     {id:4, name: "nibras", email: 'nibras@gmail.com', phoneNumber:'01775675786'},
     {id:5, name: "tusher", email: 'tusher@gmail.com', phoneNumber:'01775675786'}
-
-
-
+    
 ]
 
 
@@ -42,7 +41,20 @@ app.get('/users',(req,res)=>{
     }
 
     
+});
+
+// app.METHOD
+app.post('/users',(req,res)=>{
+    const newUser= req.body;
+    newUser.id = users.length;
+    users.push(newUser);
+    console.log('hitting the post',req.body);
+    // res.send(JSON.stringify(newUser));
+    res.json(newUser);
 })
+
+
+// dynamic api call
 
 app.get('/users/:id',(req,res)=>{
     const id =req.params.id;
